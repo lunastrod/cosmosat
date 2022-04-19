@@ -1,1 +1,5 @@
 # cosmosat
+
+Funciones:
+
+main
