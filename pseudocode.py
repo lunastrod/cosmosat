@@ -40,19 +40,44 @@ def read_altitude():
 returns true/false if able to activate microwave
 """
 def can_activate_microwave():
+	if(manual_override):
+		return True
 	if(not read_is_separated()):
 		return False
-    if(read_altitude()<10000):
-    	return False
-    return True
+
+	if(microwave_on and read_altitude()<8000):
+	return False
+	if(not microwave_on and read_altitude()<10000):
+	return False
+	return True
     
 """
 turns on power supply from microwave generator
 """
-def activate_microwave():
+def control_microwave():
+	delay()
     #turn on gpio pin
 
 
 def loop:
 	if(can_activate_microwave()):
-		activate_microwave()
+		control_microwave()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

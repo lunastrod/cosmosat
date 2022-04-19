@@ -13,6 +13,8 @@ para cambiar la direccion i2c https://github.com/pimoroni/VL53L0X-python/blob/ma
 
 interfaz con la antena??? sockets??????????????????????? ficheros???????????
 
+Logger
+
 ===========================================================================================================
 Ficheros usados:
 uplink_history.txt: guarda todos los mensajes de uplink que se han recibido
