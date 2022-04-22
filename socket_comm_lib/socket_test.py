@@ -1,35 +1,3 @@
-"""
-#!/usr/bin/env python
-
-import sys
-import ctypes
-import struct
-
-
-class YourStruct(ctypes.Structure):
-    _fields_ = [
-        ("v", ctypes.c_float),
-        ("t", ctypes.c_int),
-        ("c", ctypes.c_char),
-    ]
-
-
-def main(*argv):
-    data = b"\x9a\x99\x99?*\x00\x00\x00A\xbe\xad\xde"
-    x = YourStruct()
-    fmt = "<fic"
-    fmt_size = struct.calcsize(fmt)
-    x.v, x.t, x.c = struct.unpack(fmt, data[:fmt_size])
-    print("Fields\n  v: {:f}\n  t: {:d}\n  c: {:s}".format(x.v, x.t, x.c.decode()))
-
-
-if __name__ == "__main__":
-    print("Python {0:s} {1:d}bit on {2:s}\n".format(" ".join(elem.strip() for elem in sys.version.split("\n")), 64 if sys.maxsize > 0x100000000 else 32, sys.platform))
-    main(*sys.argv[1:])
-    print("\nDone.")
-
-"""
-
 # echo-server.py
 
 import socket
