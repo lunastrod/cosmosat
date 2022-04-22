@@ -26,6 +26,10 @@ def log_error_msg(error_str):
 def log_warning_msg(warning_str):
     write_line(ERROR_FILE,"WARNING: {s}".format(s=warning_str))
 
+#log info msg to ERROR_FILE
+def log_info_msg(warning_str):
+    write_line(ERROR_FILE,"INFO:    {s}".format(s=warning_str))
+
 def log_uplink_msg(uplink_bytes):
     write_line(TELEMETRY_FILE,"UPLINK:   {s}".format(s=uplink_bytes))
 
