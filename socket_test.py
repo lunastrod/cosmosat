@@ -36,14 +36,6 @@ import socket
 
 import time
 
-def encode_downlink_msg(s):
-    s=s.encode()
-    # code to pad spaces in string
-    s = s.ljust(64)
-    print(len(s))
-    print(str(s))
-    return s
-
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 65431  # Port to listen on (non-privileged ports are > 1023)
 
