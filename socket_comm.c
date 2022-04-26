@@ -30,39 +30,6 @@ void send_uplink_msg_data(int sockfd, struct uplink_msg_data * msg){
     //TODO: error handling
     int ret_send=send(sockfd,msg,sizeof(struct uplink_msg_data),0);
 }
-/*
-void print_bits(unsigned int x)
-{
-    int i;
-    for(i=8*sizeof(x)-1; i>=0; i--) {
-        (x & (1 << i)) ? putchar('1') : putchar('0');
-    }
-    printf("\n");
-}
-*/
-void test(){
-    
-    char * str="0.000000 1.000000 2.000000 3.000000 4.000000 5.000000 6.000000 7.000000 8.000000 9.000000 10.000000 11.000000 12.000000 13.000000 14.000000 15.000000 16.000000 17.000000 18.000000 19.000000 20.000000 21.000000 22.000000 23.000000 24.000000 25.000000 26.000000 27.000000 28.000000 29.000000 30.000000 00010000101111110000100011111101";
-    char * ptr;
-    float f[31];
-    for(int i=0; i<31; i++){//parse floats from string
-        f[i]=strtod(str,&ptr);
-        str=ptr;
-        printf("%f\n",f[i]);
-        printf("%s\n\n",str);
-    }
-    str++;//ignore the next char (space)
-    printf("%s\n\n",str);
-    int32_t bitfield;
-    for(int i=0; i<32; i++){//parse bitfield from string
-        if(str[i]=='1'){
-            bitfield=bitfield<<1|1;
-        }
-        else{
-            bitfield=bitfield<<1|0;
-        }
-    }
-}
 
 /*
 converts a downlink_msg_str into a compressed downlink_msg_data
@@ -100,8 +67,6 @@ void recv_downlink_msg_data(int sockfd, struct downlink_msg_data * msg){
 
 //use example
 int main(int argc, char const* argv[]){
-    test();
-    return 0;
     int sockfd=setup_client("127.0.0.1",PORT);
     while(1){
         struct uplink_msg_data up_msg;//msg from ground
