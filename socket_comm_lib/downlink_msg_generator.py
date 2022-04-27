@@ -20,16 +20,7 @@ struct msg{
 };//128 bytes
 """
 
-DOWNLINK_STR_MAX_SIZE=4096
 
-def encode_downlink_msg(s,size):
-    #pad spaces in string
-    s = s.ljust(size-1)
-    s+='\0'
-    s=s.encode()[:size]
-    #print(s)
-    #print(len(s))
-    return s
 
 def downlink_msg_generator(float31list,bool32list):
     global DOWNLINK_STR_MAX_SIZE

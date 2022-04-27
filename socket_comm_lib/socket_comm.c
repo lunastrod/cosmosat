@@ -37,6 +37,10 @@ downlink_msg_str example:
 0.000000 1.000000 2.000000 3.000000 4.000000 5.000000 6.000000 7.000000 8.000000 9.000000 10.000000 11.000000 12.000000 13.000000 14.000000 15.000000 16.000000 17.000000 18.000000 19.000000 20.000000 21.000000 22.000000 23.000000 24.000000 25.000000 26.000000 27.000000 28.000000 29.000000 30.000000 00010000101111110000100011111101
 */
 void convert_downlink_str_to_data(struct downlink_msg_str * str, struct downlink_msg_data * msg){
+
+    printf("%d\n",str->data[1]);
+    return;
+
     char * parse;
     char * ptr;
     for(int i=0; i<31; i++){//parse floats from string

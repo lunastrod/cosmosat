@@ -3,7 +3,7 @@ TARGET1 = client.exe
 #todos los objetos de los que dependa el ejecutable
 OBJS1 = socket_comm.o
 #flags del compilador
-CFLAGS =
+CFLAGS = -Wall
 
 .PHONY: all
 all: $(TARGET1)
