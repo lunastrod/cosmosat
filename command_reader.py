@@ -24,10 +24,14 @@ class up_command():
         return result
     
     def update_uplink_msg(self,msg):
-        translated=COMMAND_TRANSLATION[msg]
+        translated=COMMAND_TRANSLATION.get(msg)
+        if(translated==None):
+            #warning, update_uplink_msg wrong msg
+            return None
         self.commands[translated]=True
-        pass
+        #TODO: update this to add args to commands. Probably overkill for this project, but not really that hard to make
     
+    #returns true
     def get_command(self,str_command):
         value=self.commands.get(str_command)
         if(value==None):
@@ -36,15 +40,46 @@ class up_command():
         self.commands[str_command]=False
         return value
 
+    def look_command(self,str_command):
+        value=self.commands.get(str_command)
+        if(value==None):
+            #warning, tried to look wrong str_command
+            return None
+        return value
 
 
-x=up_command()
-x.update_uplink_msg(b'\x01\x00\x00\x00')
-print(x.get_command("force_deploymenta"))
-print(x.get_command("force_deployment"))
-print(x.get_command("force_deployment"))
-print(x.get_command("force_deployment"))
-x.update_uplink_msg(b'\x01\x00\x00\x00')
-print(x.get_command("force_deployment"))
-print(x.get_command("force_deployment"))
+if(__name__=="__main__"):
+    x=up_command()
+    print("testing update")
+    x.update_uplink_msg(123123)
+    print(x.commands)
+    x.update_uplink_msg(b'\x01\x00\x00\x00')
+    print(x.commands)
+    x.update_uplink_msg(b'\x09\x00\x00\x00')
+    print(x.commands)
+
+
+    print("testing wrong command")
+    print(x.get_command("force_deploymenta"))
+    print("testing get")
+    x.update_uplink_msg(b'\x01\x00\x00\x00')
+    print(x.get_command("force_deployment"))
+    print(x.get_command("force_deployment"))
+    print(x.get_command("force_deployment"))
+    x.update_uplink_msg(b'\x01\x00\x00\x00')
+    print(x.get_command("force_deployment"))
+    print(x.get_command("force_deployment"))
+    print("testing look")
+    x.update_uplink_msg(b'\x01\x00\x00\x00')
+    print(x.look_command("force_deployment"))
+    print(x.look_command("force_deployment"))
+    print(x.look_command("force_deployment"))
+    print(x.look_command("force_deployment"))
+    print(x.look_command("force_deployment"))
+    print(x.get_command("force_deployment"))
+    print(x.look_command("force_deployment"))
+
+
+
+
 
