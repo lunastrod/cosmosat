@@ -1,12 +1,12 @@
 #nombre del ejecutable
-TARGET1 = client
+TARGET1 = client.exe
 #todos los objetos de los que dependa el ejecutable
 OBJS1 = socket_comm.o
 #flags del compilador
-CFLAGS = -Wall
+CFLAGS =
 
 .PHONY: all
-all: $(TARGET1) $(TARGET2)
+all: $(TARGET1)
 
 #link del target con todos los objetos
 #$@ hace referencia a TARGET1
