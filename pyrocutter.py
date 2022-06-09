@@ -1,5 +1,6 @@
 
-import time 
+import time
+from tkinter import Variable 
 
 #we need to use the function of the comand reader that gives the order to activate the deployment (we will call it as "activate" and it's a bool)
 
@@ -38,7 +39,9 @@ def deploy_activator(activation:bool, autonomous_output:bool, deploy_command:boo
 
 def deploy_executor(activate:bool, autonomous_result:bool, deploy_order:bool, elevation): #En el loop principal, se llama a esta función y se le meten las 4 variables que requiere el deployment como input
     deploy_autonomous(elevation, autonomous_result)
+    print(autonomous_result)
     deploy_activator(activate, autonomous_result, deploy_order)
+    print(deploy_order)
     deploy_switcher(deploy_order)
     return
 
@@ -46,9 +49,9 @@ def deploy_executor(activate:bool, autonomous_result:bool, deploy_order:bool, el
 
 if __name__ == "__main__":
 
-    activador=True
-    autonomous=True
-    order=True
+    activador=False
+    autonomous=False
+    order=False
 
     for idx in range(8000,12000,100):
         print(idx, end=" ")
