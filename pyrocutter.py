@@ -1,4 +1,5 @@
 
+from enum import auto
 import time
 from tkinter import Variable 
 
@@ -24,7 +25,7 @@ def deploy_autonomous(altitude, autonomous_output: bool): #El segundo input va a
     
     else:
         autonomous_output=False
-    return
+    return autonomous_output
 
 
 def deploy_activator(activation:bool, autonomous_output:bool, deploy_command:bool): #deploy_command es la variable que se mete luego en el switcher, es la que se activa finalmente. Activation es la q sale del command treader
@@ -33,16 +34,19 @@ def deploy_activator(activation:bool, autonomous_output:bool, deploy_command:boo
     
     else:
         deploy_command=False
-    return
+    return deploy_command
     
 
 
 def deploy_executor(activate:bool, autonomous_result:bool, deploy_order:bool, elevation): #En el loop principal, se llama a esta función y se le meten las 4 variables que requiere el deployment como input
-    deploy_autonomous(elevation, autonomous_result)
-    print(autonomous_result)
-    deploy_activator(activate, autonomous_result, deploy_order)
-    print(deploy_order)
-    deploy_switcher(deploy_order)
+    auto= False
+    comm= False
+    
+    auto= deploy_autonomous(elevation, autonomous_result)
+    #print(autonomous_result)
+    comm= deploy_activator(activate, auto, deploy_order)
+    #print(deploy_order)
+    deploy_switcher(comm)
     return
 
 
