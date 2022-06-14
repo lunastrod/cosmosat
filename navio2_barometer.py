@@ -5,11 +5,12 @@ import numpy as np
 import navio.ms5611
 import navio.util
 
+if __name__ == "navio2_barometer":
 
-navio.util.check_apm()
+    navio.util.check_apm()
 
-baro = navio.ms5611.MS5611()
-baro.initialize()
+    baro = navio.ms5611.MS5611()
+    baro.initialize()
 
 
 def get_pressure():
@@ -51,6 +52,7 @@ def get_temperature():
 
 PRESSURE_11 = 22.65
 PRESSURE_25 = 2.488
+
 
 def get_altitude_from_pressure(pressure):
 
