@@ -1,6 +1,15 @@
-import time
+from time import time, sleep
 import numpy as np
 
+from file_logger import log_flight_info, log_downlink_msg
+
+
+## time constants for each element
+time_counter_barometer = 0
+TIME_STEP_BAROMETER = 1
+
+## log key
+BAROMETER_LK = 4
 
 ## function to get the data from the barometer
 def get_pressure():
@@ -32,3 +41,20 @@ def get_altitude_from_pressure():
 
     #obtenemos la altura en metros
     return h
+
+def log_barometer(t0: float):
+
+    global time_counter_barometer, TIME_STEP_BAROMETER, BAROMETER_LK
+
+    t = time() - t0
+
+    ## barometer data
+    if t > time_counter_barometer:
+
+        altitude = get_altitude_from_pressure()
+        pressure = get_pressure()
+
+        log_flight_info([BAROMETER_LK, altitude, pressure, t])
+        log_downlink_msg([BAROMETER_LK, altitude, pressure, t])
+
+        time_counter_barometer += TIME_STEP_BAROMETER
