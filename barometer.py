@@ -2,6 +2,17 @@ from time import time, sleep
 import numpy as np
 
 from file_logger import log_flight_info, log_downlink_msg
+from moteino import moteino_write
+from bmp280 import BMP280
+
+try:
+       from smbus2 import SMBus
+except ImportError:
+       from smbus import SMBus
+
+# Initialise the BMP280
+bus = SMBus(1)
+bmp280 = BMP280(i2c_dev=bus)
 
 
 ## time constants for each element
@@ -13,11 +24,19 @@ BAROMETER_LK = 4
 
 ## function to get the data from the barometer
 def get_pressure():
+    pressure = bmp280.get_pressure()
 
-    return 0
+    return pressure
+
+def get_temperature():
+    temperature = bmp280.get_temperature()
+
+    return temperature
 
 PRESSURE_11 = 22.65
 PRESSURE_25 = 2.488
+
+DOWNLINK_SEPARATING_CHAR = '-'
 
 
 def get_altitude_from_pressure():
@@ -54,7 +73,15 @@ def log_barometer(t0: float):
         altitude = get_altitude_from_pressure()
         pressure = get_pressure()
 
-        log_flight_info([BAROMETER_LK, altitude, pressure, t])
-        log_downlink_msg([BAROMETER_LK, altitude, pressure, t])
+        info_arr = [BAROMETER_LK, altitude, pressure, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+
+        moteino_write(comando)
+
+
 
         time_counter_barometer += TIME_STEP_BAROMETER
