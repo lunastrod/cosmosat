@@ -11,6 +11,8 @@ TIME_TO_CHECK_SEPARATION = 30
 # log key
 MECHANISM_LK = 7
 
+DOWNLINK_SEPARATING_CHAR = '-'
+
 # setup
 PIN_SOLENOID = 7
 GPIO.setmode(GPIO.BOARD)
@@ -42,11 +44,22 @@ def deploy(t0: float):
 
     if is_separated():
 
-        log_flight_info([MECHANISM_LK, "separated", t])
-        log_downlink_msg([MECHANISM_LK, "separated", t])
+        info_arr = [MECHANISM_LK, "separated", t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
     else:
-        log_flight_info([MECHANISM_LK, "not_separated", t])
-        log_downlink_msg([MECHANISM_LK, "not_separated", t])
+
+        info_arr = [MECHANISM_LK, "not_separated", t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
 
 
 

@@ -79,9 +79,6 @@ def log_barometer(t0: float):
         log_downlink_msg(info_arr)
 
         comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
-
         moteino_write(comando)
-
-
 
         time_counter_barometer += TIME_STEP_BAROMETER

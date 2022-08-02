@@ -22,6 +22,8 @@ IMAGE_RESOLUTION_V = 720
 IMAGE_LK = 5
 VIDEO_LK = 6
 
+DOWNLINK_SEPARATING_CHAR = '-'
+
 ## camera setup
 camera = PiCamera()
 camera.resolution = (IMAGE_RESOLUTION_H, IMAGE_RESOLUTION_V)
@@ -63,13 +65,23 @@ def log_image(t0: float):
 
     t = time() - t0
 
-    log_flight_info([IMAGE_LK, "caption", t])
-    log_downlink_msg([IMAGE_LK, "caption", t])
+    info_arr = [IMAGE_LK, "caption", t]
+
+    log_flight_info(info_arr)
+    log_downlink_msg(info_arr)
+
+    comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+    moteino_write(comando)
 
 
 def log_video(t0: float):
 
     t = time() - t0
 
-    log_flight_info([VIDEO_LK, "video", t])
-    log_downlink_msg([VIDEO_LK, "video", t])
+    info_arr = [VIDEO_LK, "video", t]
+
+    log_flight_info()
+    log_downlink_msg(info_arr)
+
+    comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+    moteino_write(comando)

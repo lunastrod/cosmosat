@@ -15,6 +15,8 @@ LASER_LK = 3
 ## other constants
 DISTANCE_SEPARATION = 300 # mm
 
+DOWNLINK_SEPARATING_CHAR = '-'
+
 ## initialize sensor obj
 SENSOR_I2C_ADDRESS = 0x29
 sensor1=VL53L0X.VL53L0X(i2c_bus=1, i2c_address=SENSOR_I2C_ADDRESS)
@@ -49,7 +51,12 @@ def log_laser_sensor(t0: float):
 
         distance = get_laser_sensor_distance()
 
-        log_flight_info([LASER_LK, distance, t])
-        log_downlink_msg([LASER_LK, distance, t])
+        info_arr = [LASER_LK, distance, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
 
         time_counter_laser += TIME_STEP_LASER

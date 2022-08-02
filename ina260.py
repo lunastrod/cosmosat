@@ -31,6 +31,8 @@ ina2 = adafruit_ina260.INA260(i2c, i2c_address=ina2_address)
 ina3_address = 0x44
 ina3 = adafruit_ina260.INA260(i2c, i2c_address=ina3_address)
 
+DOWNLINK_SEPARATING_CHAR = '-'
+
 
 def get_current_voltage_power_1():
 
@@ -61,20 +63,35 @@ def log_ina(t0: float):
         ## ina260_1 data
         current, voltage, power = get_current_voltage_power_ina_1()
 
-        log_flight_info([INA1_LK, current, voltage, power, t])
-        log_downlink_msg([INA1_LK, current, voltage, power, t])
+        info_arr = [INA1_LK, current, voltage, power, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
 
         ## ina260_2 data
         current, voltage, power = get_current_voltage_power_ina_2()
 
-        log_flight_info([INA2_LK, current, voltage, power, t])
-        log_downlink_msg([INA2_LK, current, voltage, power, t])
+        info_arr = [INA2_LK, current, voltage, power, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
 
         ## ina260_3 data
         current, voltage, power = get_current_voltage_power_ina_3()
 
-        log_flight_info([INA3_LK, current, voltage, power, t])
-        log_downlink_msg([INA3_LK, current, voltage, power, t])
+        info_arr = [INA3_LK, current, voltage, power, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
 
         time_counter_ina += TIME_STEP_INA
 
