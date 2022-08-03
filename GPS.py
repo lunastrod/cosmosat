@@ -28,12 +28,14 @@ try:
             nmea_time = NMEA_buff[0]                    #extract time from GPGGA string
             nmea_latitude = NMEA_buff[1]                #extract latitude from GPGGA string
             nmea_longitude = NMEA_buff[3]               #extract longitude from GPGGA string
-            print('NMEA Time: ', nmea_time,'\n')
+            nmea_altitude = NMEA_buff[8]
+            nmea_alt_ref = NMEA_buff[10]
+            print('Time: ', nmea_time,'\n')
             lat = (float)(nmea_latitude)
             lat = convert_to_degrees(lat)
             longi = (float)(nmea_longitude)
             longi = convert_to_degrees(longi)
-            print ('NMEA Latitude: ', lat,'NMEA Longitude: ', longi,'\n')
+            print ('Latitude: ', lat,'Longitude: ', longi,'Altitude: ', nmea_altitude,'Ref altitude: ', nmea_alt_ref,'\n')
 
 except KeyboardInterrupt:
     sys.exit(0)
