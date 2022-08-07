@@ -2,10 +2,19 @@ import serial
 from time import sleep
 import sys
 
+
+## GPS Setup
 ser = serial.Serial ('/dev/ttyS0')
 gpgga_info = '$GPGGA,'
 GPGGA_buffer = 0
 NMEA_buff = 0
+
+## GPS Constants
+time_counter_GPS = 0
+TIME_STEP_GPS = 1
+GPS_LK = 5
+DOWNLINK_SEPARATING_CHAR = '-'
+
 
 def convert_to_degrees(raw_value):
     decimal_value = raw_value/100.00
@@ -15,27 +24,53 @@ def convert_to_degrees(raw_value):
     position = '%.4f' %(position)
     return position
 
-try:
-    while True:
-        received_data = (str)(ser.readline()) #read NMEA string received
-        GPGGA_data_available = received_data.find(gpgga_info)   #check for NMEA GPGGA string
-        if (GPGGA_data_available>0):
-            GPGGA_buffer = received_data.split('$GPGGA,',1)[1]  #store data coming after “$GPGGA,” string
-            NMEA_buff = (GPGGA_buffer.split(','))
-            nmea_time = []
-            nmea_latitude = []
-            nmea_longitude = []
-            nmea_time = NMEA_buff[0]                    #extract time from GPGGA string
-            nmea_latitude = NMEA_buff[1]                #extract latitude from GPGGA string
-            nmea_longitude = NMEA_buff[3]               #extract longitude from GPGGA string
-            nmea_altitude = NMEA_buff[8]
-            nmea_alt_ref = NMEA_buff[10]
-            print('Time: ', nmea_time,'\n')
-            lat = (float)(nmea_latitude)
-            lat = convert_to_degrees(lat)
-            longi = (float)(nmea_longitude)
-            longi = convert_to_degrees(longi)
-            print ('Latitude: ', lat,'Longitude: ', longi,'Altitude: ', nmea_altitude,'Ref altitude: ', nmea_alt_ref,'\n')
 
-except KeyboardInterrupt:
-    sys.exit(0)
+def get_GPS_location():
+
+    received_data = (str)(ser.readline())   ## Read NMEA string received
+    GPGGA_data_available = received_data.find(gpgga_info)   ## Check for NMEA GPGGA string
+
+    if (GPGGA_data_available > 0):
+
+        GPGGA_buffer = received_data.split('$GPGGA,',1)[1]
+        NMEA_buff = (GPGGA_buffer.split(','))
+
+        latitude = NMEA_buff[1]
+        longitude = NMEA_buff[3]
+        altitude = NMEA_buff[8]
+        alt_ref = NMEA_buff[10]
+
+        latitude = (float)(latitude)
+        latitude = convert_to_degrees(latitude)
+        longitude = (float)(longitude)
+        longi = convert_to_degrees(longitude)
+
+        altitude = (float)(altitude)
+        alt_ref = (float)(alt_ref)
+
+        return latitude, longitude, altitude, alt_ref
+
+
+def log_GPS(t0: float):
+
+    global time_counter_GPS, TIME_STEP_GPS, GPS_LK
+
+    t = time() - t0
+
+    ## GPS data
+    if t > time_counter_GPS:
+
+        latitude, longitude, altitude, ref_alt = get_GPS_location()
+
+        info_arr = [GPS_LK, latitude, longitude, altitude, ref_alt, t]
+
+        log_flight_info(info_arr)
+        log_downlink_msg(info_arr)
+
+        comando = DOWNLINK_SEPARATING_CHAR.join([str(n) for n in info_arr])
+        moteino_write(comando)
+
+        time_counter_GPS += TIME_STEP_GPS
+
+
+

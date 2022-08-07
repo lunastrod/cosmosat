@@ -6,9 +6,9 @@ from moteino import moteino_write
 from bmp280 import BMP280
 
 try:
-       from smbus2 import SMBus
+    from smbus2 import SMBus
 except ImportError:
-       from smbus import SMBus
+    from smbus import SMBus
 
 # Initialise the BMP280
 bus = SMBus(1)
