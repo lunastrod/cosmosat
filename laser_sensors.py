@@ -48,8 +48,10 @@ def log_laser_sensor(t0: float):
 
     ## laser sensors data
     if t > time_counter_laser:
-
-        distance = get_laser_sensor_distance()
+        try:
+            distance = get_laser_sensor_distance()
+        except:
+            distance= "-"
 
         info_arr = [LASER_LK, distance, t]
 
