@@ -38,14 +38,14 @@ def get_current_voltage_power_1():
     try:
         return ina1.current, ina1.voltage, ina1.power
     except:
-        return "-", "-", "-"
+        return "$", "$", "$"
 
 
 def get_current_voltage_power_2():
     try:
         return ina2.current, ina2.voltage, ina2.power
     except:
-        return "-", "-", "-"
+        return "$", "$", "$"
 
 
 def get_current_voltage_power_3():
@@ -53,7 +53,7 @@ def get_current_voltage_power_3():
     try:
         return ina3.current, ina3.voltage, ina3.power
     except:
-        return "-", "-", "-"
+        return "$", "$", "$"
 
 
 def log_ina(t0: float):
@@ -71,7 +71,7 @@ def log_ina(t0: float):
         try:
             current, voltage, power = get_current_voltage_power_ina_1()
         except:
-            current, voltage, power = "-", "-", "-"
+            current, voltage, power = "$", "$", "$"
 
 
         info_arr = [INA1_LK, current, voltage, power, t]
@@ -86,7 +86,7 @@ def log_ina(t0: float):
         try:
             current, voltage, power = get_current_voltage_power_ina_2()
         except:
-            current, voltage, power = "-", "-", "-"
+            current, voltage, power = "$", "$", "$"
 
         info_arr = [INA2_LK, current, voltage, power, t]
 
@@ -100,7 +100,7 @@ def log_ina(t0: float):
         try:
             current, voltage, power = get_current_voltage_power_ina_3()
         except:
-            current, voltage, power = "-", "-", "-"
+            current, voltage, power = "$", "$", "$"
 
 
         info_arr = [INA3_LK, current, voltage, power, t]
