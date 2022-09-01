@@ -26,29 +26,32 @@ def convert_to_degrees(raw_value):
 
 
 def get_GPS_location():
+    try:
+        received_data = (str)(ser.readline())   ## Read NMEA string received
+        GPGGA_data_available = received_data.find(gpgga_info)   ## Check for NMEA GPGGA string
 
-    received_data = (str)(ser.readline())   ## Read NMEA string received
-    GPGGA_data_available = received_data.find(gpgga_info)   ## Check for NMEA GPGGA string
+        if (GPGGA_data_available > 0):
 
-    if (GPGGA_data_available > 0):
+            GPGGA_buffer = received_data.split('$GPGGA,',1)[1]
+            NMEA_buff = (GPGGA_buffer.split(','))
 
-        GPGGA_buffer = received_data.split('$GPGGA,',1)[1]
-        NMEA_buff = (GPGGA_buffer.split(','))
+            latitude = NMEA_buff[1]
+            longitude = NMEA_buff[3]
+            altitude = NMEA_buff[8]
+            alt_ref = NMEA_buff[10]
 
-        latitude = NMEA_buff[1]
-        longitude = NMEA_buff[3]
-        altitude = NMEA_buff[8]
-        alt_ref = NMEA_buff[10]
+            latitude = (float)(latitude)
+            latitude = convert_to_degrees(latitude)
+            longitude = (float)(longitude)
+            longi = convert_to_degrees(longitude)
 
-        latitude = (float)(latitude)
-        latitude = convert_to_degrees(latitude)
-        longitude = (float)(longitude)
-        longi = convert_to_degrees(longitude)
+            altitude = (float)(altitude)
+            alt_ref = (float)(alt_ref)
 
-        altitude = (float)(altitude)
-        alt_ref = (float)(alt_ref)
-
-        return latitude, longitude, altitude, alt_ref
+            return latitude, longitude, altitude, alt_ref
+    
+    except:
+        return ",", ",", ",", ","
 
 
 def log_GPS(t0: float):
@@ -59,8 +62,11 @@ def log_GPS(t0: float):
 
     ## GPS data
     if t > time_counter_GPS:
+        try:
+            latitude, longitude, altitude, ref_alt = get_GPS_location()
 
-        latitude, longitude, altitude, ref_alt = get_GPS_location()
+        except:
+            latitude, longitude, altitude, ref_alt= ",", ",", ",", ","
 
         info_arr = [GPS_LK, latitude, longitude, altitude, ref_alt, t]
 
