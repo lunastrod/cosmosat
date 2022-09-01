@@ -28,14 +28,14 @@ def get_pressure():
         pressure = bmp280.get_pressure()
         return pressure
     except:
-        return "-"
+        return "$"
 
 def get_temperature():
     try:
         temperature = bmp280.get_temperature()
         return temperature
     except:
-        return "-"
+        return "$"
 
 PRESSURE_11 = 22.65
 PRESSURE_25 = 2.488
@@ -67,10 +67,10 @@ def get_altitude_from_pressure():
         return h
     
     except:
-        pressure= "-"
-        T= "-"
-        h= "-"
-        return "-"
+        pressure= "$"
+        T= "$"
+        h= "$"
+        return "$"
 
 def log_barometer(t0: float):
 
@@ -85,8 +85,8 @@ def log_barometer(t0: float):
             altitude = get_altitude_from_pressure()
             pressure = get_pressure()
         except:
-            altitude = "-"
-            pressure = "-" 
+            altitude = "$"
+            pressure = "$" 
 
         info_arr = [BAROMETER_LK, altitude, pressure, t]
 
