@@ -46,7 +46,7 @@ def take_caption(t0: float):
         image_counter += 1
 
     except:
-        return "-"
+        return "$"
 
 
 def take_video(t0: float):
@@ -68,7 +68,7 @@ def take_video(t0: float):
         video_counter += 1
 
     except:
-        return 
+        return "$"
 
 def log_image(t0: float):
 
