@@ -34,13 +34,16 @@ def get_laser_sensor_distance():
 
 
 def is_separated():
+    try:
+        distance = get_laser_sensor_distance()
 
-    distance = get_laser_sensor_distance()
+        if distance >= SEPARATION_DISTANCE:
+            return True
+        else:
+            return False
 
-    if distance >= SEPARATION_DISTANCE:
-        return True
-    else:
-        return False
+    except:
+        return "-"
 
 
 def log_laser_sensor(t0: float):
