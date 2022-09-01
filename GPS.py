@@ -51,7 +51,7 @@ def get_GPS_location():
             return latitude, longitude, altitude, alt_ref
     
     except:
-        return ",", ",", ",", ","
+        return "$", "$", "$", "$"
 
 
 def log_GPS(t0: float):
@@ -66,7 +66,7 @@ def log_GPS(t0: float):
             latitude, longitude, altitude, ref_alt = get_GPS_location()
 
         except:
-            latitude, longitude, altitude, ref_alt= ",", ",", ",", ","
+            latitude, longitude, altitude, ref_alt= "$", "$", "$", "$"
 
         info_arr = [GPS_LK, latitude, longitude, altitude, ref_alt, t]
 
