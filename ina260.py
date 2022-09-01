@@ -61,7 +61,11 @@ def log_ina(t0: float):
         t = time() - t0
 
         ## ina260_1 data
-        current, voltage, power = get_current_voltage_power_ina_1()
+        try:
+            current, voltage, power = get_current_voltage_power_ina_1()
+        except:
+            current, voltage, power = "-", "-", "-"
+
 
         info_arr = [INA1_LK, current, voltage, power, t]
 
@@ -72,7 +76,10 @@ def log_ina(t0: float):
         moteino_write(comando)
 
         ## ina260_2 data
-        current, voltage, power = get_current_voltage_power_ina_2()
+        try:
+            current, voltage, power = get_current_voltage_power_ina_2()
+        except:
+            current, voltage, power = "-", "-", "-"
 
         info_arr = [INA2_LK, current, voltage, power, t]
 
@@ -83,7 +90,11 @@ def log_ina(t0: float):
         moteino_write(comando)
 
         ## ina260_3 data
-        current, voltage, power = get_current_voltage_power_ina_3()
+        try:
+            current, voltage, power = get_current_voltage_power_ina_3()
+        except:
+            current, voltage, power = "-", "-", "-"
+
 
         info_arr = [INA3_LK, current, voltage, power, t]
 
