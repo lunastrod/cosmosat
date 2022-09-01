@@ -35,18 +35,25 @@ DOWNLINK_SEPARATING_CHAR = '-'
 
 
 def get_current_voltage_power_1():
-
-    return ina1.current, ina1.voltage, ina1.power
-
-
-def get_current_voltage_power_2():
-
-    return ina2.current, ina2.voltage, ina2.power
+    try:
+        return ina1.current, ina1.voltage, ina1.power
+    except:
+        return "-", "-", "-"
 
 
 def get_current_voltage_power_2():
+    try:
+        return ina2.current, ina2.voltage, ina2.power
+    except:
+        return "-", "-", "-"
 
-    return ina3.current, ina3.voltage, ina3.power
+
+def get_current_voltage_power_3():
+
+    try:
+        return ina3.current, ina3.voltage, ina3.power
+    except:
+        return "-", "-", "-"
 
 
 def log_ina(t0: float):
