@@ -28,7 +28,7 @@ def get_laser_sensor_distance():
     try:
         distance = sensor1.get_distance()
     except:
-        distance = "-"
+        distance = "$"
 
     return distance
 
@@ -43,7 +43,7 @@ def is_separated():
             return False
 
     except:
-        return "-"
+        return "$"
 
 
 def log_laser_sensor(t0: float):
@@ -57,7 +57,7 @@ def log_laser_sensor(t0: float):
         try:
             distance = get_laser_sensor_distance()
         except:
-            distance= "-"
+            distance= "$"
 
         info_arr = [LASER_LK, distance, t]
 
