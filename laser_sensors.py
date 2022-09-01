@@ -25,7 +25,10 @@ sensor1=VL53L0X.VL53L0X(i2c_bus=1, i2c_address=SENSOR_I2C_ADDRESS)
 def get_laser_sensor_distance():
 
     ## obtain distance
-    distance = sensor1.get_distance()
+    try:
+        distance = sensor1.get_distance()
+    except:
+        distance = "-"
 
     return distance
 
