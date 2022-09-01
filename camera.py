@@ -31,35 +31,44 @@ camera.resolution = (IMAGE_RESOLUTION_H, IMAGE_RESOLUTION_V)
 
 def take_caption(t0: float):
 
+    
     global time_counter_image, TIME_STEP_IMAGE, image_counter
 
     file_name = "images/img_" + str(image_counter) + ".jpg"
 
-    camera.capture(file_name)
+    try:
+        camera.capture(file_name)
 
-    log_image(t0)
+        log_image(t0)
 
-    time_counter_image += TIME_STEP_IMAGE
+        time_counter_image += TIME_STEP_IMAGE
 
-    image_counter += 1
+        image_counter += 1
+
+    except:
+        return "-"
 
 
 def take_video(t0: float):
 
+    
     global time_counter_video, TIME_STEP_VIDEO, video_counter
 
     file_name = "videos/video_" + str(video_counter) + ".h264"
 
-    camera.start_recording(file_name)
-    camera.wait_recording(VIDEO_DURATION)
-    camera.stop_recording()
+    try:
+        camera.start_recording(file_name)
+        camera.wait_recording(VIDEO_DURATION)
+        camera.stop_recording()
 
-    log_video(t0)
+        log_video(t0)
 
-    time_counter_video+= TIME_STEP_VIDEO
+        time_counter_video+= TIME_STEP_VIDEO
 
-    video_counter += 1
+        video_counter += 1
 
+    except:
+        return 
 
 def log_image(t0: float):
 
